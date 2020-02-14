@@ -5,6 +5,7 @@ class AbsenceTable < ActiveRecord::Migration[5.2]
       t.date    :date
       t.string  :comment
       t.boolean :is_paid
+      t.float   :quantity
     end
   end
 end

@@ -16,6 +16,7 @@ class Leave < ApplicationRecord
       true
     else
       errors.add(:base, "Already Have Leaves Assigned on day")
+      throw :abort
     end
     if self.enough_leaves
       true

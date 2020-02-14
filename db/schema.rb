@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2020_02_14_004309) do
     t.date "date"
     t.string "comment"
     t.boolean "is_paid"
+    t.float "quantity"
   end
 
   create_table "active_admin_comments", force: :cascade do |t|

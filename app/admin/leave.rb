@@ -35,11 +35,11 @@ ActiveAdmin.register Leave do
     def check_for_action
       if params[:action_type] == "Approve"
         @leave_to_approve = Leave.find(params[:leave_id].to_i)
-        @leave_to_approve.update_attributes(approval_status: "Approved", approved_by: current_user.id)
+        @leave_to_approve.update_attributes(approval_status: "Approved", approved_by: current_system_user.name)
         flash[:error] = "Leave has been Approved"
       elsif params[:action_type] == "Reject"
         @leave_to_reject = Leave.find(params[:leave_id].to_i)
-        @leave_to_reject.update_attributes(approval_status: "Rejected")
+        @leave_to_reject.update_attributes(approval_status: "Rejected", approved_by: current_system_user.name)
         @leave_to_reject.rejected_leaves_readd
         flash[:error] = "Leave has been Rejected"
       end
@@ -74,6 +74,8 @@ ActiveAdmin.register Leave do
       row :date
       row :quantity
       row :comments
+      row :approval_status
+      row :approved_by
     end
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_14_004309) do
+ActiveRecord::Schema.define(version: 2020_02_14_023443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,15 @@ ActiveRecord::Schema.define(version: 2020_02_14_004309) do
     t.boolean "require_approval"
     t.string "approval_status"
     t.string "approved_by"
+  end
+
+  create_table "overtimes", force: :cascade do |t|
+    t.integer "employee_id"
+    t.integer "number_of_hours"
+    t.date "date"
+    t.string "reason"
+    t.string "approved_by"
+    t.string "approval_status"
   end
 
   create_table "system_users", force: :cascade do |t|

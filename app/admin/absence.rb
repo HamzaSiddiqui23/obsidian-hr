@@ -29,5 +29,4 @@ ActiveAdmin.register Absence do
     end
     f.actions
   end
-
 end

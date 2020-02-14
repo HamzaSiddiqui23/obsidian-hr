@@ -91,4 +91,8 @@ ActiveAdmin.register Employee do
   action_item :add_absence, only: :show  do
     link_to "Add Absence", new_admin_absence_path(id: resource.id)
   end
+
+  action_item :add_overtime, only: :show  do
+    link_to "Add Overtime", new_admin_overtime_path(id: resource.id)
+  end
 end

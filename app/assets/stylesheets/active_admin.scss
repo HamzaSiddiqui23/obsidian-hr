@@ -1,0 +1,85 @@
+@import "font-awesome";
+@import "active_material";
+
+
+.has_one ~ .has_many_add {
+  display: none !important;
+}
+
+body {
+  background-color: #ccc;
+  padding: 0px;
+  margin: 0px;
+  font-family: Verdana;
+}
+.heirarchy {
+  text-align: right;
+  padding: 10px;
+}
+.employee-hierarchy {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+}
+.employee-hierarchy li {  
+  display: inline-block;
+  width: 20%;
+  margin-bottom: -3px;  
+}
+.profile {  
+  border: 1px solid gray;  
+  height: 30%;
+  /*margin: 10px 0px;*/
+  width: 50%;
+  background-color: #fffff;
+  box-shadow: 0px 2px 0px rgba(100,100,100,0.3);
+}
+.profile:hover {
+  background-color: #f0f0f0;
+  box-shadow: 0px 4px 6px rgba(120,120,120,0.7);
+  cursor: pointer;
+}
+.hierarchy_img{
+  width:200px;
+  height:150px;
+}
+.profile div{
+  margin: 5px 5px;  
+}
+.name {
+  font-weight: bold;
+}
+
+.parent li{
+  margin-bottom:20px;
+}
+.self {
+  /*float: left;*/
+  border: 2px solid yellow;  
+  background-color: yellow;
+  box-shadow: 0px 4px 6px rgba(100,100,100,0.6);
+}
+
+.child li{
+  margin-bottom: 20px;
+}
+
+#reportees{
+  border: 2px solid black;
+  text-align: left;
+}
+
+#team{
+  border: 2px solid gray;
+  text-align: left;
+  margin-bottom: 1%;
+}
+
+.team{
+  margin-top: 10%;
+}
+
+#rt{
+  margin-top: 10%;
+}

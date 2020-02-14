@@ -1,0 +1,45 @@
+<% e = Employee.find(params[:id]) %>
+<% m = e.manager_id.nil? ? nil : Employee.find(e.manager_id) %>
+<% team = m.nil? ? Employee.none : Employee.where(manager_id: m.id) %>
+<% reportees = Employee. where(manager_id: e.id) %>
+<div class="heirarchy">
+  <% if !m.nil? %>
+    <div id="team">
+      Manager
+      <ul class="parent employee-hierarchy" >
+        <%= link_to admin_hierarchy_path(id: m.id) do %>
+        <li><div class="profile" id="manager"><%= image_tag m.image.attached? ? url_for(m.image) : "img_avatar.png",:class => "hierarchy_img"%><div class="name"><%=m.full_name%></div><div><%=m.title%></div></div></li>
+        <% end %>
+      </ul>
+      <div></div>
+    </div>
+  <% end %>
+  <div id="team">
+    My Team
+    <ul class="child employee-hierarchy" >
+      <li><div class="team self profile" id="me"><%= image_tag e.image.attached? ? url_for(e.image) : "img_avatar.png",:class => "hierarchy_img" %><div class="name"><%=e.full_name%></div><div><%=e.title%></div></div></li>
+      <% if !team.empty? %>
+        <% team.each do |tm| %>
+          <% if tm.id != e.id %>
+            <%= link_to admin_hierarchy_path(id: tm.id) do %>
+              <li><div class="team profile"><%= image_tag tm.image.attached? ? url_for(tm.image) : "img_avatar.png",:class => "hierarchy_img"%><div class="name"><%=tm.full_name%></div><div><%=tm.title%></div></div></li>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+  <div></div>
+  <% if !reportees.empty? %>
+    <div id ="reportees">
+      Reportees
+      <ul class="child employee-hierarchy">
+        <% reportees.each do |tm| %>
+          <%= link_to admin_hierarchy_path(id: tm.id) do %>
+            <li><div class="team profile"><%= image_tag tm.image.attached? ? url_for(tm.image) : "img_avatar.png",:class => "hierarchy_img"%><div class="name"><%=tm.full_name%></div><div><%=tm.title%></div></div></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>    
+</div>

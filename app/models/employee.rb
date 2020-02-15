@@ -6,6 +6,7 @@ class Employee < ApplicationRecord
   has_many :leaves
   has_many :absences
   has_many :overtimes
+  has_many :bonuses
   accepts_nested_attributes_for :system_user
   accepts_nested_attributes_for :employee_benefit_plan
   accepts_nested_attributes_for :employee_compensation

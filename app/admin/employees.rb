@@ -96,4 +96,8 @@ ActiveAdmin.register Employee do
   action_item :add_overtime, only: :show  do
     link_to "Add Overtime", new_admin_overtime_path(id: resource.id)
   end
+
+  action_item :add_bonus, only: :show  do
+    link_to "Add Bonus/Allowance", new_admin_bonus_path(id: resource.id)
+  end
 end

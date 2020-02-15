@@ -8,4 +8,3 @@ class SystemUser < ApplicationRecord
     employee.full_name
   end
 end
-

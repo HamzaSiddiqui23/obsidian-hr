@@ -19,7 +19,7 @@ ActiveAdmin.register Absence do
     f.inputs 'Absence Details' do
       f.input :quantity, as: :select, collection: AppConstant::LEAVE_QUANTITY, include_blank: false
       if params[:id].nil?
-        f.input :employee_id, as: :select, :collection => Employee.all, include_blank: false, :input_html => { :id => "emp_id" }
+        f.input :employee_id, as: :select, :collection => Employee.where(id: current_system_user.employee.id), include_blank: false, :input_html => { :id => "emp_id" }
       else
         f.input :employee_id, as: :select, :collection => Employee.where(id: params[:id].to_i), selected: params[:id].to_i, include_blank: false, :input_html => { :id => "emp_id" }
       end

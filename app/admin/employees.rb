@@ -47,6 +47,7 @@ ActiveAdmin.register Employee do
   end
   show :title => :full_name do
     attributes_table do
+      row :income_tax
       row :joining_date
       row :office_location,as: :select, collection: AppConstant::OFFICE 
       row :address

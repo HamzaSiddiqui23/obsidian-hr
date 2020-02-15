@@ -15,4 +15,10 @@ class Employee < ApplicationRecord
     f_name.titleize
   end
 
+  def income_tax
+    annual_salary = employee_compensation.salary * 12
+    tax_slab = TaxSlab.where("income_start <= ? AND income_end > ? AND tax_slab_year_start <= ? AND tax_slab_year_end >= ?",annual_salary,annual_salary,Date.today, Date.today).first
+    tax_slab.nil? ? 0 : tax_slab.fixed_tax + (employee_compensation.salary * tax_slab.percentage_tax / 100)  
+  end
+
 end

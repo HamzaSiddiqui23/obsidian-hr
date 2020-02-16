@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_15_215717) do
+ActiveRecord::Schema.define(version: 2020_02_16_003944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,24 @@ ActiveRecord::Schema.define(version: 2020_02_15_215717) do
     t.string "reason"
     t.string "approved_by"
     t.string "approval_status"
+  end
+
+  create_table "payrolls", force: :cascade do |t|
+    t.integer "employee_id"
+    t.date "payroll_generated_date"
+    t.date "payroll_month"
+    t.integer "base_salary"
+    t.integer "bonus"
+    t.integer "overtime"
+    t.integer "advances"
+    t.integer "absence_deduction"
+    t.integer "advance_return"
+    t.integer "taxable_amount"
+    t.integer "actual_amount"
+    t.integer "eobi"
+    t.integer "tax"
+    t.integer "gross_pay"
+    t.boolean "paid"
   end
 
   create_table "system_users", force: :cascade do |t|

@@ -1,4 +1,4 @@
-ActiveAdmin.register_page "Payroll" do
+ActiveAdmin.register_page "Payroll Test" do
   menu false
   content do
       render :partial => 'payroll'

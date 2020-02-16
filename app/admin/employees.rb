@@ -47,7 +47,6 @@ ActiveAdmin.register Employee do
   end
   show :title => :full_name do
     attributes_table do
-      row :income_tax
       row :joining_date
       row :office_location,as: :select, collection: AppConstant::OFFICE 
       row :address
@@ -78,7 +77,7 @@ ActiveAdmin.register Employee do
   end
 
   action_item :print_payslip, only: :show  do
-    link_to "Payslip", admin_payroll_path(id: resource.id,payroll: true)
+    link_to "Payslip", admin_payroll_test_path(id: resource.id,payroll: true)
   end
 
   action_item :view_hierarchy, only: :show  do
@@ -99,5 +98,9 @@ ActiveAdmin.register Employee do
 
   action_item :add_bonus, only: :show  do
     link_to "Add Bonus/Allowance", new_admin_bonus_path(id: resource.id)
+  end
+
+  action_item :add_advance, only: :show  do
+    link_to "Add Advance", new_admin_advance_path(id: resource.id)
   end
 end

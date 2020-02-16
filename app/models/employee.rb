@@ -3,6 +3,7 @@ class Employee < ApplicationRecord
   has_one :employee_benefit_plan
   has_one :employee_compensation
   has_one_attached :image
+  has_many :advances
   has_many :leaves
   has_many :absences
   has_many :overtimes
@@ -16,10 +17,10 @@ class Employee < ApplicationRecord
     f_name.titleize
   end
 
-  def income_tax
-    annual_salary = employee_compensation.salary * 12
-    tax_slab = TaxSlab.where("income_start <= ? AND income_end > ? AND tax_slab_year_start <= ? AND tax_slab_year_end >= ?",annual_salary,annual_salary,Date.today, Date.today).first
-    tax_slab.nil? ? 0 : tax_slab.fixed_tax + (employee_compensation.salary * tax_slab.percentage_tax / 100)  
+  def income_tax(payable)
+    annual_payable = payable * 12
+    tax_slab = TaxSlab.where("income_start <= ? AND income_end > ? AND tax_slab_year_start <= ? AND tax_slab_year_end >= ?",annual_payable,annual_payable,Date.today, Date.today).first
+    tax_slab.nil? ? 0 : tax_slab.fixed_tax + (payable * tax_slab.percentage_tax / 100)  
   end
 
 end

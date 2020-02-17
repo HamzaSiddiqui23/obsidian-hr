@@ -1,4 +1,4 @@
-class Payroll < ActiveRecord::Migration[5.2]
+class PayrollTable < ActiveRecord::Migration[5.2]
   def change
     create_table :payrolls do |t|
       t.integer :employee_id, :references => :employees

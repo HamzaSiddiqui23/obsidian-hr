@@ -26,7 +26,11 @@
       <div class="info"> 
       <h2><%= e.full_name%></h2>
       <div class="logo">
-        <%= image_tag url_for(e.image), width: 200, height: 200%>
+        <%= if e.image.attached?
+          (image_tag url_for(e.image), width: 200, height: 200)
+          else
+           image_tag ("/default_avatar.png"), width: 200, height: 200
+          end%>
       </div>
 
       </div><!--End Info-->

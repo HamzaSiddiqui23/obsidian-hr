@@ -21,7 +21,7 @@ class Employee < ApplicationRecord
   def income_tax(payable)
     annual_payable = payable * 12
     tax_slab = TaxSlab.where("income_start <= ? AND income_end > ? AND tax_slab_year_start <= ? AND tax_slab_year_end >= ?",annual_payable,annual_payable,Date.today, Date.today).first
-    tax_slab.nil? ? 0 : tax_slab.fixed_tax + (payable * tax_slab.percentage_tax / 100)  
+    tax_slab.nil? ? 0 : (tax_slab.fixed_tax / 12) + (payable * tax_slab.percentage_tax / 100)  
   end
 
 end

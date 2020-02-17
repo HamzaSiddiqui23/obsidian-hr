@@ -8,7 +8,6 @@ ActiveAdmin.register TaxSlab do
       f.input :income_end
       f.input :fixed_tax
       f.input :percentage_tax
-      f.input :exceeding_amount
       f.input :tax_slab_year_start, as: :date_select, discard_day: true, discard_month: true
       end
     f.actions

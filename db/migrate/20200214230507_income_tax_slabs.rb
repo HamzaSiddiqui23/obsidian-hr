@@ -1,11 +1,10 @@
 class IncomeTaxSlabs < ActiveRecord::Migration[5.2]
   def change
     create_table :tax_slabs do |t|
-      t.integer :income_start
-      t.integer :income_end
-      t.integer :fixed_tax
-      t.integer :percentage_tax
-      t.integer :exceeding_amount
+      t.float   :income_start
+      t.float   :income_end
+      t.float   :fixed_tax
+      t.float   :percentage_tax
       t.date    :tax_slab_year_start
       t.date    :tax_slab_year_end
     end

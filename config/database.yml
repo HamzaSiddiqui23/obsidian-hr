@@ -80,6 +80,8 @@ test:
 #
 production:
   <<: *default
-  database: obsidian-hr_production
-  username: obsidian-hr
-  password: <%= ENV['OBSIDIAN-HR_DATABASE_PASSWORD'] %>
+  database: d5ktq5idfceb6d
+  username: tulmqgucccdtgq
+  password: e4dc60288d87a8260016cf5b3148974a9ad433e8792a8505978f9e4d3ca3dcc4
+  port:     5432
+  URI:      postgres://tulmqgucccdtgq:e4dc60288d87a8260016cf5b3148974a9ad433e8792a8505978f9e4d3ca3dcc4@ec2-52-202-185-87.compute-1.amazonaws.com:5432/d5ktq5idfceb6d

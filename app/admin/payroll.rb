@@ -6,12 +6,18 @@ ActiveAdmin.register Payroll do
 
   filter :employee
   filter :paid
+  filter :by_office_locations_in, label: 'Office Location', as: :select, collection: AppConstant::OFFICE
+  filter :month, :as => :select, :collection => (Date::MONTHNAMES[1..12]).to_a
+  filter :payroll_year, :as => :select, :collection => (2019..Time.now.year).to_a
 
   before_action do
     if params[:generate_payroll] == 'true'
-      msg = Payroll.generate_payroll
+      msg = Payroll.check_payroll_status
       flash[:error] = msg
-      redirect_to admin_payrolls_path
+      if !msg.include? "Error" 
+        Payroll.delay.generate_payroll
+        redirect_to admin_payrolls_path
+      end
     end
   end
 
@@ -24,6 +30,7 @@ ActiveAdmin.register Payroll do
 
   index do
     selectable_column
+    column :office_location
     column :employee
     column :base_salary
     column :bonus

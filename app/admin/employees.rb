@@ -12,6 +12,12 @@ ActiveAdmin.register Employee do
   
   actions :all, except: :destroy  
 
+  before_action do
+    if params[:email_test] == "true"
+      AppMailer.payroll_complete(Employee.first).deliver_now
+    end
+  end
+
   index do
     column 'Employee' do |o|
       link_to o.full_name, 'employees/' + o.id.to_s
@@ -102,5 +108,8 @@ ActiveAdmin.register Employee do
 
   action_item :add_advance, only: :show  do
     link_to "Add Advance", new_admin_advance_path(id: resource.id)
+  end
+  action_item :email_test, only: :show  do
+    link_to "Email Test", admin_employees_path(email_test: true)
   end
 end

@@ -41,6 +41,9 @@ GEM
       ransack (~> 2.1, >= 2.1.1)
       sassc-rails (~> 2.1)
       sprockets (>= 3.0, < 4.1)
+    activeadmin-xls (2.0.2)
+      activeadmin (>= 1.0.0)
+      spreadsheet (~> 1.0)
     activejob (5.2.4.1)
       activesupport (= 5.2.4.1)
       globalid (>= 0.3.6)
@@ -201,6 +204,7 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    ruby-ole (1.2.12.2)
     ruby_dep (1.5.0)
     rubyzip (2.0.0)
     sass (3.7.4)
@@ -225,6 +229,8 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    spreadsheet (1.2.6)
+      ruby-ole (>= 1.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -265,6 +271,7 @@ PLATFORMS
 DEPENDENCIES
   active_material!
   activeadmin
+  activeadmin-xls
   byebug
   capybara (>= 2.15)
   coffee-rails (~> 4.2)

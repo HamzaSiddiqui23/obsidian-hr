@@ -10,4 +10,5 @@ if [ $1 == '-f' ]; then
   echo "Seeding DB $appname"
 fi
 heroku restart -a $appname
+heroku run RAILS_ENV=production bin/delayed_job start -a $appname
 echo "Restarting and ready to go $appname"

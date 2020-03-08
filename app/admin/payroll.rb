@@ -10,6 +10,18 @@ ActiveAdmin.register Payroll do
   filter :month, :as => :select, :collection => (Date::MONTHNAMES[1..12]).to_a
   filter :payroll_year, :as => :select, :collection => (2019..Time.now.year).to_a
 
+
+  xls() do
+    after_filter do |sheet|
+      currency_format = Spreadsheet::Format.new number_format: 'NUMBER', :color => :blue, :weight => :bold, :size => 18
+      sheet.insert_row sheet.rows.count, ['TOTAL',"=SUM(N2:N#{sheet.rows.count})"]
+      @data_row = sheet.rows.count - 1
+      #sheet.row(@data_row).formats[0] = currency_format
+      @row = sheet.row(@data_row)
+      @row.set_format(1,currency_format)
+    end
+  end
+
   before_action do
     if params[:generate_payroll] == 'true'
       msg = Payroll.check_payroll_status

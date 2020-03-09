@@ -18,6 +18,29 @@ class Payroll < ApplicationRecord
     [:month_eq,:payroll_year_eq]
   end
 
+  def self.month_totals
+    c_payrolls = Payroll.payroll_this_month
+    @bonus = 0
+    @overtime = 0
+    @advances = 0
+    @absence_deduct = 0
+    @advance_return = 0
+    @eobi = 0
+    @tax = 0
+    @gross_pay = 0
+    c_payrolls.each do |p|
+      @bonus = @bonus + p.bonus
+      @overtime = @overtime + p.overtime
+      @advances = @advances + p.advances
+      @absence_deduct = @absence_deduct + p.absence_deduction
+      @advance_return = @advance_return + p.advance_return
+      @eobi = @eobi + p.eobi
+      @tax = @tax + p.tax
+      @gross_pay = @gross_pay + p.gross_pay
+    end
+    payroll_totals = [@bonus, @overtime, @advances, @absence_deduct, @advance_return, @eobi, @tax, @gross_pay]
+  end
+
   def office_location
     Employee.find(employee_id).office_location
   end

@@ -13,12 +13,8 @@ ActiveAdmin.register Payroll do
 
   xls() do
     after_filter do |sheet|
-      currency_format = Spreadsheet::Format.new number_format: 'NUMBER', :color => :blue, :weight => :bold, :size => 18
-      sheet.insert_row sheet.rows.count, ['TOTAL',"=SUM(N2:N#{sheet.rows.count})"]
-      @data_row = sheet.rows.count - 1
-      #sheet.row(@data_row).formats[0] = currency_format
-      @row = sheet.row(@data_row)
-      @row.set_format(1,currency_format)
+      payroll_totals = Payroll.month_totals
+      sheet.insert_row sheet.rows.count, ['TOTALS','','','',payroll_totals[0],payroll_totals[1],payroll_totals[2],payroll_totals[3],payroll_totals[4],'','',payroll_totals[5],payroll_totals[6],payroll_totals[7]]
     end
   end
 

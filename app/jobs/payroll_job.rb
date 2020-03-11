@@ -11,7 +11,8 @@ class PayrollJob < Struct.new(:emp_id)
       @payable= e.employee_compensation.salary + @adv + @ot + @bonus - @absence - @adv_paid_back
       @eobi = (@payable*e.employee_compensation.EOBI_percentage)/100 
       @tax = e.income_tax(@payable)
-      Payroll.create!(employee_id: e.id, payroll_generated_date: Date.today, payroll_month: Date.today.beginning_of_month,base_salary: e.employee_compensation.salary,bonus: @bonus, overtime: @ot, advances: @adv,absence_deduction: @absence,advance_return: @adv_paid_back,taxable_amount: @taxable, actual_amount: @payable, eobi: @eobi, tax: @tax, gross_pay: @payable - @eobi - @tax, paid:false)
+      pr = Payroll.create!(employee_id: e.id, payroll_generated_date: Date.today, payroll_month: Date.today.beginning_of_month,base_salary: e.employee_compensation.salary,bonus: @bonus, overtime: @ot, advances: @adv,absence_deduction: @absence,advance_return: @adv_paid_back,taxable_amount: @taxable, actual_amount: @payable, eobi: @eobi, tax: @tax, gross_pay: @payable - @eobi - @tax, paid:false)
+      e.generate_payslip(pr)
     end
   end
   def success(job) 

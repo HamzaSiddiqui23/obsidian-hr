@@ -60,3 +60,4 @@ gem "active_material", github: "vigetlabs/active_material"
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'activeadmin-xls'
+gem 'prawn-rails'

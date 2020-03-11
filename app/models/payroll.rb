@@ -55,7 +55,7 @@ class Payroll < ApplicationRecord
   def self.check_payroll_status
     if !Payroll.where(payroll_month: Date.today.beginning_of_month).empty?
       return "Error: Payroll already exists for " + Date.today.strftime("%B")
-    elsif Delayed::Job.where('handler LIKE ?','%' + "Payroll" + '%')
+    elsif !Delayed::Job.where('handler LIKE ?','%' + "Payroll" + '%').empty?
       return "Error: Payroll is in process, please wait. You will be notified once it is ready"
     else
       return "Payroll is being generated. You will be notified once it is complete"

@@ -74,10 +74,22 @@ ActiveAdmin.register Employee do
         column :health_insurance
       end
     end
-  end
-
-  action_item :print_payslip, only: :show  do
-    link_to "Payslip", admin_payroll_test_path(id: resource.id,payroll: true)
+    panel 'Attachments', only: :show do
+      table_for employee.files do 
+        column :file_name do |f|
+          f.filename
+        end
+        column :preview do |f|
+          link_to "Preview", rails_blob_path(f, disposition: 'preview')
+        end
+        column :download do |f|
+          link_to "Download", rails_blob_path(f, disposition: 'attachment')
+        end
+        #column :delete do |f|
+        #  link_to "Delete", f.purge
+        #end
+      end
+    end
   end
 
   action_item :view_hierarchy, only: :show  do

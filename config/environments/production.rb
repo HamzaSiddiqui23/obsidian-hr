@@ -26,7 +26,7 @@ config.assets.precompile += ['active_admin.css', 'active_admin.js']
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
 
-  config.active_storage.service = :local
+  config.active_storage.service = :amazon
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.

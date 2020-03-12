@@ -8,7 +8,7 @@ test:
 
 amazon:
   service: s3
-  access_key_id: AKIA2DJ5JUELR2VI6OM6
-  secret_access_key: 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
+  access_key_id: <%=ENV['AWS-ACCESS-KEY']%>
+  secret_access_key: <%=ENV['AWS-SECRET-ACCESS']%>
   region: us-east-2
-  bucket: obsidian-hr-solution
+  bucket: <%=ENV['AWS-BUCKET']%>

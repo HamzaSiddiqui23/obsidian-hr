@@ -31,8 +31,8 @@ class Employee < ApplicationRecord
   Prawn::Document.new do |pdf|
     if image.attached?
       pdf.image StringIO.open(image.download), fit: [100, 100], position: :center, position: :center
-    else
-      pdf.image "public/default_avatar.png", fit: [100, 100], position: :center, position: :center
+  #  else
+  #    pdf.image "public/default_avatar.png", fit: [100, 100], position: :center, position: :center
     end
     # Title
     pdf.text full_name, :size => 25, :align => :center

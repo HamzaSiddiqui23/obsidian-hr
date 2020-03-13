@@ -15,6 +15,8 @@ class Employee < ApplicationRecord
   accepts_nested_attributes_for :employee_benefit_plan
   accepts_nested_attributes_for :employee_compensation
 
+  after_create :generate_contract
+
   def full_name
     f_name = first_name + ' ' + last_name
     f_name.titleize
@@ -27,68 +29,63 @@ class Employee < ApplicationRecord
   end
 
   def generate_payslip(payroll)
-  # Generate invoice
-  Prawn::Document.new do |pdf|
-    if image.attached?
-      pdf.image StringIO.open(image.download), fit: [100, 100], position: :center, position: :center
-  #  else
-  #    pdf.image "public/default_avatar.png", fit: [100, 100], position: :center, position: :center
+    Prawn::Document.new do |pdf|
+      #Company Info
+      pdf.image "public/pectlogo.png", fit:[200,200], position: :center
+      pdf.text "Suite#3, First Floor, Panther Plaza, F-8 Markaz", :align => :center
+      pdf.text "+92 51 2817575-8", :align => :center
+      pf.text "pect@pect.com.pk", :align => :center
+      pdf.move_down 20
+      #EmployeeInfo
+      if image.attached?
+        pdf.image StringIO.open(image.download), fit: [100, 100], position: :center
+      else
+        pdf.image "public/default_avatar.png", fit: [100, 100], position: :center
+      end
+      pdf.move_down 10
+      pdf.text full_name, :size => 25, :align => :center
+      pdf.text "Employee ##{id}", :align => :center
+      pdf.text "Payroll for #{payroll.payroll_month.strftime("%B")} #{payroll.payroll_month.year.to_s}", :align => :center
+      pdf.move_down 20
+      #Table
+      header = ['Type', 'Income', 'Deduction']
+      items =  [["Base Salary","#{payroll.base_salary}", "0"]] \
+            +  [["Bonuses","#{payroll.bonus}", "0"]] \
+            +  [["Advances","#{payroll.advances}", "0"]] \
+            +  [["Absence Deductions","0", "#{payroll.absence_deduction}"]] \
+            +  [["Advance Returns","0", "#{payroll.advance_return}"]] \
+            +  [["EOBI", "0", "#{payroll.eobi}"]] \
+            +  [["Income Tax:", "0", "#{payroll.tax}"]] \
+            +  [["","Gross Pay","#{payroll.gross_pay}"]]
+
+      pdf.table [header] + items, :header => true, :width => pdf.bounds.width,  :row_colors => %w{cccccc eeeeee} do
+        row(-1).column(0).borders = []
+        row(-1).align = :right
+        row(0).style :font_style => :bold
+        row(-1).style :font_style => :bold
+      end
+      #Footer
+      pdf.draw_text "Generated at #{(Time.now)}", :at => [0, 0]
+      pdf.move_down 20
+      pdf.draw_text "It is a computer generated slip and does need a stamp", :at => [0, 20]
+
+      io = StringIO.new pdf.render
+      files.attach(io: io, content_type: 'application/pdf',filename: full_name + "_Payroll_"+ payroll.payroll_month.strftime("%B") + payroll.payroll_month.year.to_s + ".pdf")
     end
-    # Title
-    pdf.text full_name, :size => 25, :align => :center
-
-    # Client info
-    pdf.text "Employee ##{id}", :align => :center
-
-    pdf.text "Payroll for #{payroll.payroll_month.strftime("%B")} #{payroll.payroll_month.year.to_s}", :align => :center
-
-    pdf.move_down 20
-
-    # Items
-    header = ['Type', 'Income', 'Deduction']
-   # items = invoice.items.collect do |item|
-    #  [item.quantity.to_s, item.description, number_to_currency(item.amount), number_to_currency(item.total)]
-    #end this automatically adds to table. 
-    
-    items =  [["Base Salary:","#{payroll.base_salary}", "0"]] \
-                  + [["Income Tax:", "0", "#{income_tax(payroll.tax)}"]] \
-
-    pdf.table [header] + items, :header => true, :width => pdf.bounds.width,  :row_colors => %w{cccccc eeeeee} do
-      row(-4..-1).borders = []
-      row(-4..-1).column(2).align = :right
-      row(0).style :font_style => :bold
-      row(-1).style :font_style => :bold
-    end
-    
-                     # :border_style => :grid, 
-                     # :headers => header, 
-                     # :width => pdf.bounds.width, 
-                     # :row_colors => %w{cccccc eeeeee},
-                     # :align => { 0 => :right, 1 => :left, 2 => :right, 3 => :right, 4 => :right }
-
-
-    # Terms
-#    if invoice.terms != ''
-#      pdf.move_down 20
-#      pdf.text 'Terms', :size => 18
-#      pdf.text invoice.terms
-#    end
-#
-#    # Notes
-#    if invoice.notes != ''
-#      pdf.move_down 20
-#      pdf.text 'Notes', :size => 18
-#      pdf.text invoice.notes
-#    end
-
-    # Footer
-    pdf.draw_text "Generated at #{(Time.now)}", :at => [0, 0]
-    pdf.move_down 20
-    pdf.draw_text "It is a computer generated slip and does need a stamp", :at => [0, 20]
-
-    io = StringIO.new pdf.render
-    files.attach(io: io, content_type: 'application/pdf',filename: full_name + "_Payroll_"+ payroll.payroll_month.strftime("%B") + payroll.payroll_month.year.to_s + ".pdf")
-    #files.analyze
   end
-end
+
+  def generate_contract
+    tfile = File.open("public/Contract.txt")
+    tdata = tfile.read
+    tdata.sub! '{NAME}', full_name
+    tdata.sub! '{SALARY}', employee_compensation.salary.to_s
+    tdata.sub! '{EOBI}', employee_compensation.EOBI_percentage.to_s
+    tdata.sub! '{ANNUALLEAVES}', employee_benefit_plan.annual_leaves.to_s
+    Prawn::Document.new do |pdf|
+      pdf.text tdata
+      io = StringIO.new pdf.render
+      files.attach(io: io, content_type: 'application/pdf',filename: full_name+"_Contract.pdf")
+    end
+    tfile.close
+  end
 end

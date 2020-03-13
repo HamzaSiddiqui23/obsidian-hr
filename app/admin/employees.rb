@@ -1,6 +1,6 @@
 ActiveAdmin.register Employee do
 
-  permit_params :first_name, :last_name, :title,:image, :cnic,:manager_id, :can_login, :joining_date, :office_location, :employee_type, :address, :phone_number, :email, system_user_attributes: [:id, :user_name, :password, :system_role], employee_compensation_attributes: [:id, :salary, :EOBI_percentage], employee_benefit_plan_attributes: [:id, :annual_leaves, :casual_leaves, :compensation_leaves, :sick_leaves, :health_insurance]
+  permit_params :first_name, :last_name, :title,:image, :cnic,:manager_id, :can_login, :joining_date, :office_location, :employee_type, :address, :phone_number, :email, :files, system_user_attributes: [:id, :user_name, :password, :system_role], employee_compensation_attributes: [:id, :salary, :EOBI_percentage], employee_benefit_plan_attributes: [:id, :annual_leaves, :casual_leaves, :compensation_leaves, :sick_leaves, :health_insurance]
   
   form partial: 'form'
  
@@ -90,6 +90,10 @@ ActiveAdmin.register Employee do
         #end
       end
     end
+  end
+
+  action_item :add_advance, only: :show  do
+    link_to "Add Attachment", edit_admin_employee_path(id: resource.id, attachment: true)
   end
 
   action_item :view_hierarchy, only: :show  do

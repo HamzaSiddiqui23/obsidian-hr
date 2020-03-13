@@ -1,35 +1,39 @@
 active_admin_form_for [:admin, employee], :html => { :id => 'admin_new_employee_form' } do |f|
   f.semantic_errors *f.object.errors.keys
   f.inputs do
-    f.input :first_name
-    f.input :last_name
-    f.input :image, as: :file
-    f.input :cnic
-    f.input :can_login
-    f.input :joining_date, as: :date_picker
-    f.input :title
-    f.input :manager_id, as: :select, collection: Employee.all
-    f.input :office_location,as: :select, collection: AppConstant::OFFICE 
-    f.input :employee_type,as: :select, collection: AppConstant::EMPLOYEE_TYPE
-    f.input :address
-    f.input :phone_number
-    f.input :email
-    if f.object.new_record?
-      f.has_many :system_user, class: 'has_one', new_record: true do |a|
-        a.input :user_name
-        a.input :password
-        a.input :system_role, as: :select,collection: AppConstant::SYSTEM_ROLES
-      end
-      f.has_many :employee_benefit_plan, class: 'has_one', new_record: true do |a|
-        a.input :annual_leaves
-        a.input :casual_leaves
-        a.input :compensation_leaves
-        a.input :sick_leaves
-        a.input :health_insurance
-      end
-      f.has_many :employee_compensation, class: 'has_one', new_record: true do |a|
-        a.input :salary
-        a.input :EOBI_percentage
+    if params[:attachment] == 'true'
+      f.input :files, as: :file
+    else
+      f.input :first_name
+      f.input :last_name
+      f.input :image, as: :file
+      f.input :cnic
+      f.input :can_login
+      f.input :joining_date, as: :date_picker
+      f.input :title
+      f.input :manager_id, as: :select, collection: Employee.all
+      f.input :office_location,as: :select, collection: AppConstant::OFFICE 
+      f.input :employee_type,as: :select, collection: AppConstant::EMPLOYEE_TYPE
+      f.input :address
+      f.input :phone_number
+      f.input :email
+      if f.object.new_record?
+        f.has_many :system_user, class: 'has_one', new_record: true do |a|
+          a.input :user_name
+          a.input :password
+          a.input :system_role, as: :select,collection: AppConstant::SYSTEM_ROLES
+        end
+        f.has_many :employee_benefit_plan, class: 'has_one', new_record: true do |a|
+          a.input :annual_leaves
+          a.input :casual_leaves
+          a.input :compensation_leaves
+          a.input :sick_leaves
+          a.input :health_insurance
+        end
+        f.has_many :employee_compensation, class: 'has_one', new_record: true do |a|
+          a.input :salary
+          a.input :EOBI_percentage
+        end
       end
     end
   end

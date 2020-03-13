@@ -1,0 +1,8 @@
+Dear {NAME},
+
+We would like to welcome you to our company. Your Salary will be {SALARY} and you will have EOBI of {EOBI}%. Also you will have {ANNUALLEAVES} annual leaves.
+
+Looking forward for you to join.
+
+Regards,
+HR

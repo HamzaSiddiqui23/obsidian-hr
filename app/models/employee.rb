@@ -34,7 +34,7 @@ class Employee < ApplicationRecord
       pdf.image "public/pectlogo.png", fit:[200,200], position: :center
       pdf.text "Suite#3, First Floor, Panther Plaza, F-8 Markaz", :align => :center
       pdf.text "+92 51 2817575-8", :align => :center
-      pf.text "pect@pect.com.pk", :align => :center
+      pdf.text "pect@pect.com.pk", :align => :center
       pdf.move_down 20
       #EmployeeInfo
       if image.attached?

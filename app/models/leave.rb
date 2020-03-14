@@ -6,6 +6,15 @@ class Leave < ApplicationRecord
 
   before_validation :set_default_approval, on: :create
 
+  after_create :send_approval_mail
+
+
+  def send_approval_mail
+    if approval_status == 'Pending'
+      AppMailer.approval_required(Employee.find(employee_id),'leaves',id).deliver_later
+    end
+  end
+
   def set_default_approval
     if require_approval
       Employee.find(employee_id).manager_id.nil? ? self.approval_status = 'Approved' : self.approval_status = 'Pending'

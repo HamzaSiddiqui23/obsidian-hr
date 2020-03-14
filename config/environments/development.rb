@@ -30,6 +30,8 @@ config.assets.precompile += ['active_admin.css', 'active_admin.js']
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
+  config.action_mailer.default_url_options = {:host => "localhost:3000"}
+
   config.action_mailer.perform_caching = false
 
   config.active_storage.service = :local

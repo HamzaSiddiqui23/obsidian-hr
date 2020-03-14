@@ -3,6 +3,10 @@ active_admin_form_for [:admin, employee], :html => { :id => 'admin_new_employee_
   f.inputs do
     if params[:attachment] == 'true'
       f.input :files, as: :file
+    elsif params[:deactivate] == 'true'
+      f.input :status, as: :select, collection: AppConstant::EMPLOYEE_STATUS - ['Active'], include_blank: false
+      f.input :reason_for_leaving
+      f.input :do_not_rehire
     else
       f.input :first_name
       f.input :last_name

@@ -4,7 +4,7 @@
 <head>
   <meta name="viewport" content="width=device-width" /><!-- IMPORTANT -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Payroll Processed</title>
+  <title>Approval Required</title>
   
   <!-- <link rel="stylesheet" type="text/css" href="stylesheets/email.css" /> -->
   <style>
@@ -226,7 +226,7 @@
             <tr>
               <td style="color:#000;font:400 16px Trebuchet MS;padding:0">
                   <span style="display:block;font-family:'Trebuchet MS';font-weight:700;display:block;padding:40px 25px;margin:0;color:#f1f5f6;;font-size:2.5em;text-align:center;background-color:#ed363a;text-decoration:none">
-                    Payroll processed!
+                    Approval Required!
                   </span>
               </td>
             </tr>
@@ -238,9 +238,10 @@
         <tr>
           <td>
             <br/>
-            <h3>Hi <b style="color: #ed363a"><%= @user.full_name.titleize %></b>!</h3>
+            <h3>Hi <b style="color: #ed363a"><%= @manager.full_name.titleize %></b>!</h3>
             <br/>
-            <p>Payroll has been processed successfully. Please go to Payroll section to export Excel File</p>
+            <p>There is a request for approval of <%=@approval_type%> for <%=@user%>. Please take some time out to review and approve or reject the <a href="<%=@url%>"> request</a>.
+            </p>
             <br>
             <p>Regards,</p>
             <p>Team at Obsidian HR </p>

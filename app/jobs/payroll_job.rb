@@ -1,6 +1,6 @@
 class PayrollJob < Struct.new(:emp_id)
   def perform
-    @employees = Employee.all
+    @employees = Employee.active
     @employees.each do |e|
       @adv = e.advances.where(date: Date.today.beginning_of_month..Date.today.end_of_month).sum(:amount)
       @bonus = e.bonuses.where(date: Date.today.beginning_of_month..Date.today.end_of_month).sum(:amount)

@@ -15,11 +15,20 @@ class Employee < ApplicationRecord
   accepts_nested_attributes_for :employee_benefit_plan
   accepts_nested_attributes_for :employee_compensation
 
+  before_create :update_status
+
   after_create :generate_contract
+
+  scope :active, lambda { where(status: "Active") }
+  scope :inactive, lambda { where.not(status: "Active")}
 
   def full_name
     f_name = first_name + ' ' + last_name
     f_name.titleize
+  end
+
+  def update_status
+    self.status = 'Active'
   end
 
   def income_tax(payable)
@@ -67,7 +76,7 @@ class Employee < ApplicationRecord
       #Footer
       pdf.draw_text "Generated at #{(Time.now)}", :at => [0, 0]
       pdf.move_down 20
-      pdf.draw_text "It is a computer generated slip and does need a stamp", :at => [0, 20]
+      pdf.draw_text "It is a computer generated slip and does not need a stamp or signature", :at => [0, 20]
 
       io = StringIO.new pdf.render
       files.attach(io: io, content_type: 'application/pdf',filename: full_name + "_Payroll_"+ payroll.payroll_month.strftime("%B") + payroll.payroll_month.year.to_s + ".pdf")

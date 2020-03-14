@@ -36,13 +36,13 @@ ActiveAdmin.register Leave do
       if params[:action_type] == "Approve"
         @leave_to_approve = Leave.find(params[:leave_id].to_i)
         @leave_to_approve.update_attributes(approval_status: "Approved", approved_by: current_system_user.name)
-        AppMailer.approval_status_update(Employee.find(@leave_to_approve.employee_id),'leaves',@leave_to_approve.date,"Approved").deliver_now
+        AppMailer.approval_status_update(Employee.find(@leave_to_approve.employee_id),'leaves',@leave_to_approve.date,"Approved").deliver_later
         flash[:error] = "Leave has been Approved"
       elsif params[:action_type] == "Reject"
         @leave_to_reject = Leave.find(params[:leave_id].to_i)
         @leave_to_reject.update_attributes(approval_status: "Rejected", approved_by: current_system_user.name)
         @leave_to_reject.rejected_leaves_readd
-        AppMailer.approval_status_update(Employee.find(@leave_to_reject.employee_id),'leaves',@leave_to_reject.date,"Rejected").deliver_now
+        AppMailer.approval_status_update(Employee.find(@leave_to_reject.employee_id),'leaves',@leave_to_reject.date,"Rejected").deliver_later
         flash[:error] = "Leave has been Rejected"
       end
     end
